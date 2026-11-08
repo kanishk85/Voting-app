@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Create your account')}"></head>
+<body class="auth-page"><header th:replace="~{fragments :: header}"></header>
+<main class="auth-shell layout-shell auth-shell-register">
+  <aside class="auth-aside auth-aside-register"><span class="auth-kicker"><span class="live-dot"></span> VOTING APP</span><div class="auth-quote-mark">“</div><h1>Create your<br><span class="serif-italic">account.</span></h1><p>Register to access the ballot.</p><div class="auth-aside-foot"><span>VOTER REGISTRATION</span></div><div class="auth-orbit" aria-hidden="true">✳</div></aside>
+  <section class="auth-form-panel auth-form-panel-register"><div class="form-heading"><span class="eyebrow"><span class="eyebrow-line"></span> REGISTER</span><h2>Create an <span class="serif-italic">account.</span></h2><p>Enter your details below.</p></div>
+    <form class="auth-form" method="post" th:action="@{/register}" th:object="${registration}" novalidate>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <div class="form-field"><label for="name">Your full name</label><div class="input-wrap"><span class="input-icon">↗</span><input id="name" type="text" th:field="*{name}" placeholder="The name you go by" autocomplete="name" required maxlength="100" th:classappend="${#fields.hasErrors('name')} ? ' input-error' : ''"></div><p class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name is required.</p></div>
+      <div class="form-field"><label for="email">Email address</label><div class="input-wrap"><span class="input-icon">@</span><input id="email" type="email" th:field="*{email}" placeholder="you@example.com" autocomplete="email" required maxlength="254" th:classappend="${#fields.hasErrors('email')} ? ' input-error' : ''"></div><p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Enter a valid email.</p></div>
+      <div class="form-field"><label for="phone">Phone number</label><div class="input-wrap"><span class="input-icon">#</span><input id="phone" type="tel" th:field="*{phone}" placeholder="+91 00000 00000" autocomplete="tel" required maxlength="30" th:classappend="${#fields.hasErrors('phone')} ? ' input-error' : ''"></div><p class="field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Enter a valid phone number.</p></div>
+      <div class="form-field"><label for="password">Create a password <span class="label-note">8 CHARACTERS MIN.</span></label><div class="input-wrap"><span class="input-icon">↗</span><input id="password" type="password" th:field="*{password}" placeholder="At least 8 characters" autocomplete="new-password" required minlength="8" maxlength="72" th:classappend="${#fields.hasErrors('password')} ? ' input-error' : ''"><button type="button" class="password-toggle" data-toggle-password="password">Show</button></div><p class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Choose a longer password.</p></div>
+      <button type="submit" class="button button-dark button-submit">Create account <span class="arrow-mark">↗</span></button>
+      <p class="form-legal">By continuing, you agree to keep your account details accurate.</p>
+    </form>
+    <p class="form-footnote register-footnote">Already have an account? <a th:href="@{/login}">Sign in ↗</a></p>
+  </section>
+</main><script th:src="@{/js/app.js}"></script></body></html>

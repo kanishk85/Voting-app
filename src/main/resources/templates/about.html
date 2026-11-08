@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('How it works')}"></head>
+<body class="home-page"><header th:replace="~{fragments :: header}"></header>
+<main class="about-simple layout-shell">
+  <section class="about-hero"><span class="eyebrow"><span class="eyebrow-line"></span> VOTING APP</span><h1>How it <span class="serif-italic">works.</span></h1><p>Register, choose one candidate, and submit your vote.</p></section>
+  <section class="about-steps-section"><div class="about-step"><span>01</span><div><h2>Register</h2><p>Create a voter account with your name, email, phone number, and password.</p></div></div><div class="about-step"><span>02</span><div><h2>Sign in</h2><p>Sign in to open your voter dashboard.</p></div></div><div class="about-step"><span>03</span><div><h2>Vote</h2><p>Choose one of the four candidates and submit your vote once.</p></div></div><div class="about-step"><span>04</span><div><h2>View results</h2><p>The admin dashboard shows the vote totals.</p></div></div></section>
+</main><script th:src="@{/js/app.js}"></script></body></html>

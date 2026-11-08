@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="head(pageTitle)">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4f1">
+  <meta name="description" content="A simple voting app.">
+  <title th:text="${pageTitle + ' — Voting App'}">Voting App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</th:block>
+<header class="site-header" th:fragment="header">
+  <a class="wordmark" href="/" aria-label="Voting App home">VOTING APP</a>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a class="nav-link" th:href="@{/}">Overview</a>
+    <a class="nav-link" th:href="@{/about}">About</a>
+  </nav>
+  <div class="header-actions" sec:authorize="isAnonymous()">
+    <a class="nav-link sign-in-link" th:href="@{/login}">Sign in</a>
+    <a class="button button-dark button-small" th:href="@{/register}">Register <span class="arrow-mark">↗</span></a>
+  </div>
+  <div class="header-actions" sec:authorize="isAuthenticated()">
+    <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin</a>
+    <a class="nav-link" sec:authorize="hasRole('NORMAL')" th:href="@{/user}">My ballot</a>
+    <form th:action="@{/logout}" method="post" class="logout-form"><button class="button button-outline button-small" type="submit">Log out <span class="arrow-mark">↗</span></button></form>
+  </div>
+</header>
+<th:block th:fragment="messages">
+  <div class="notice notice-success" th:if="${voteSuccess}" role="status"><span class="notice-indicator"></span><span th:text="${voteSuccess}">Success</span></div>
+  <div class="notice notice-error" th:if="${voteError}" role="alert"><span class="notice-indicator"></span><span th:text="${voteError}">Error</span></div>
+</th:block>
+</body>
+</html>

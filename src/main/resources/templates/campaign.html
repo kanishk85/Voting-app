@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: head(${campaign.name})}"></head>
+<body class="dashboard-page"><header th:replace="~{fragments :: header}"></header>
+<main class="dashboard-shell layout-shell">
+  <div class="campaign-page-top"><a class="back-link" th:href="@{/}">← All campaigns</a><span class="campaign-state" th:classappend="${' state-' + #strings.toLowerCase(campaign.status)}" th:text="${campaign.status}">Open</span></div>
+  <section class="campaign-detail-heading"><span class="eyebrow"><span class="eyebrow-line"></span> CAMPAIGN</span><h1 th:text="${campaign.name}">Campaign name</h1><p th:text="${campaign.tagline}">Campaign tagline</p><span class="campaign-dates" th:text="|${#temporals.format(campaign.startDate, 'dd MMM yyyy')} — ${#temporals.format(campaign.endDate, 'dd MMM yyyy')}|">Dates</span></section>
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="campaign-columns" th:classappend="${!showResults ? ' campaign-no-results' : ''}">
+    <section class="ballot-panel campaign-vote-panel"><div class="ballot-heading"><div><span class="eyebrow"><span class="eyebrow-line"></span> YOUR VOTE</span><h2>Choose a candidate</h2></div></div>
+      <p class="empty-state" th:if="${#lists.isEmpty(candidates)}">No candidates have been added yet.</p>
+      <div class="voted-state campaign-voted" th:if="${hasVoted}"><span class="voted-check">✓</span><h3>Vote recorded.</h3><p>You have already voted in this campaign.</p></div>
+      <div th:if="${!hasVoted and !#lists.isEmpty(candidates)}" sec:authorize="hasRole('NORMAL')">
+        <p class="ballot-instruction" th:if="${campaign.open}">Select one candidate. You can vote once in this campaign.</p>
+        <form th:if="${campaign.open}" th:action="@{/campaigns/{id}/vote(id=${campaign.id})}" method="post" id="ballotForm"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <div class="candidate-list"><label class="candidate-option" th:each="candidate,iter : ${candidates}" th:for="${'candidate-' + candidate.id}"><input type="radio" name="candidateId" th:id="${'candidate-' + candidate.id}" th:value="${candidate.id}" required><span class="candidate-radio"><span></span></span><span class="candidate-index" th:text="${iter.count < 10 ? '0' + iter.count : iter.count}">01</span><span class="candidate-info"><strong th:text="${candidate.name}">Candidate name</strong><span th:text="${candidate.affiliation}">Independent</span></span></label></div>
+          <div class="ballot-submit-row"><span class="ballot-reminder">One vote per campaign.</span><button type="submit" class="button button-dark" id="voteButton" disabled>Submit vote <span class="arrow-mark">↗</span></button></div>
+        </form>
+        <p class="empty-state" th:unless="${campaign.open}">Voting is not open for this campaign.</p>
+      </div>
+      <div class="campaign-login-prompt" sec:authorize="isAnonymous()" th:if="${campaign.open and !#lists.isEmpty(candidates)}"><a class="button button-dark" th:href="@{/login(campaignId=${campaign.id})}">Sign in to vote <span class="arrow-mark">↗</span></a><span>Need an account? <a th:href="@{/register}">Register</a></span></div>
+    </section>
+    <aside class="campaign-results-panel" th:if="${showResults}"><span class="eyebrow"><span class="eyebrow-line"></span> RESULTS</span><h2>Campaign results</h2><div class="leader-card" th:if="${leadingCandidate != null and totalVotes > 0}"><span class="eyebrow">LEADING CANDIDATE</span><strong th:text="${leadingCandidate.name}">Candidate</strong><span th:text="|${leadingVotes} ${leadingVotes == 1 ? 'vote' : 'votes'}|">0 votes</span></div><p class="empty-state" th:if="${totalVotes == 0}">No votes have been submitted.</p><div class="campaign-result-list" th:if="${totalVotes > 0}"><div class="campaign-result-row" th:each="candidate : ${candidates}"><span th:text="${candidate.name}">Candidate</span><strong th:text="${candidateVotes[candidate.id]}">0</strong></div></div><p class="result-total-line">TOTAL VOTES <strong th:text="${totalVotes}">0</strong></p></aside>
+  </div>
+</main><script th:src="@{/js/app.js}"></script></body></html>

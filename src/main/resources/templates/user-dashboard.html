@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Voter dashboard')}"></head>
+<body class="dashboard-page"><header th:replace="~{fragments :: header}"></header>
+<main class="dashboard-shell layout-shell">
+  <div class="dashboard-header"><div><span class="eyebrow"><span class="eyebrow-line"></span> VOTER DASHBOARD</span><h1 th:text="${voter.name}">Voter name</h1><p class="dashboard-description">Choose an active campaign to vote.</p></div></div>
+  <section class="campaign-section user-campaign-section"><div class="campaign-section-heading"><h2>Active campaigns</h2><span th:text="|${#lists.size(campaigns)} active|">0 active</span></div>
+    <p class="empty-state" th:if="${#lists.isEmpty(campaigns)}">No active campaign.</p>
+    <div class="campaign-grid" th:unless="${#lists.isEmpty(campaigns)}"><a class="campaign-card" th:each="campaign : ${campaigns}" th:href="@{/campaigns/{id}(id=${campaign.id})}"><div class="campaign-card-top"><span class="campaign-state state-open">Open</span><span class="campaign-card-arrow">↗</span></div><h3 th:text="${campaign.name}">Campaign name</h3><p th:text="${campaign.tagline}">Campaign tagline</p><span class="campaign-dates" th:text="|${#temporals.format(campaign.startDate, 'dd MMM yyyy')} — ${#temporals.format(campaign.endDate, 'dd MMM yyyy')}|">Dates</span></a></div>
+  </section>
+</main></body></html>

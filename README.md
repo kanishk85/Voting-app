@@ -1,6 +1,6 @@
 # Voting App
 
-A monochrome Spring Boot voting application with Thymeleaf, Spring Security, Spring Data JPA, and MySQL.
+A Spring Boot voting application with Thymeleaf, Spring Security, Spring Data JPA, and MySQL.
 
 ## Requirements
 

@@ -50,6 +50,9 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("NORMAL")
                         .anyRequest().authenticated())
+
+
+                        
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .usernameParameter("email").passwordParameter("password")
                         .successHandler(successHandler).failureUrl("/login?error"))

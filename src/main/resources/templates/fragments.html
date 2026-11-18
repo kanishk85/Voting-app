@@ -16,6 +16,7 @@
   <nav class="main-nav" aria-label="Main navigation">
     <a class="nav-link" th:href="@{/}">Overview</a>
     <a class="nav-link" th:href="@{/about}">About</a>
+    <a class="nav-link" sec:authorize="hasRole('NORMAL')" th:href="@{/user/results}">Results</a>
   </nav>
   <div class="header-actions" sec:authorize="isAnonymous()">
     <a class="nav-link sign-in-link" th:href="@{/login}">Sign in</a>

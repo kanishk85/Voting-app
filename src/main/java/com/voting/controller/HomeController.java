@@ -20,6 +20,9 @@ public class HomeController {
     @GetMapping("/about")
     public String about() { return "about"; }
 
+    @GetMapping("/results")
+    public String results() { return "redirect:/user/results"; }
+
     @GetMapping("/login")
     public String login(@org.springframework.web.bind.annotation.RequestParam(required = false) Long campaignId, Model model) {
         model.addAttribute("campaignId", campaignId);

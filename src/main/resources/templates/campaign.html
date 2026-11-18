@@ -3,10 +3,15 @@
 <head th:replace="~{fragments :: head(${campaign.name})}"></head>
 <body class="dashboard-page"><header th:replace="~{fragments :: header}"></header>
 <main class="dashboard-shell layout-shell">
-  <div class="campaign-page-top"><a class="back-link" th:href="@{/}">← All campaigns</a><span class="campaign-state" th:classappend="${' state-' + #strings.toLowerCase(campaign.status)}" th:text="${campaign.status}">Open</span></div>
+  <div class="campaign-page-top"><a class="back-link" th:href="${isEnded ? '/user/results' : '/user'}">← <span th:text="${isEnded ? 'All results' : 'Ongoing campaigns'}">Back</span></a><span class="campaign-state" th:classappend="${' state-' + #strings.toLowerCase(campaign.status)}" th:text="${campaign.status}">Open</span></div>
   <section class="campaign-detail-heading"><span class="eyebrow"><span class="eyebrow-line"></span> CAMPAIGN</span><h1 th:text="${campaign.name}">Campaign name</h1><p th:text="${campaign.tagline}">Campaign tagline</p><span class="campaign-dates" th:text="|${#temporals.format(campaign.startDate, 'dd MMM yyyy')} — ${#temporals.format(campaign.endDate, 'dd MMM yyyy')}|">Dates</span></section>
   <div th:replace="~{fragments :: messages}"></div>
-  <div class="campaign-columns" th:classappend="${!showResults ? ' campaign-no-results' : ''}">
+  <section class="result-card" th:if="${isEnded and !isAdmin}">
+    <h2>Campaign results</h2>
+    <p><strong>Winner:</strong> <span th:text="${leadingCandidate != null and totalVotes > 0 ? leadingCandidate.name : 'No votes recorded'}">Candidate</span></p>
+    <p><strong>Your vote:</strong> <span th:text="${voterChoice != null ? voterChoice.name : 'You did not vote in this campaign'}">Your choice</span></p>
+  </section>
+  <div class="campaign-columns" th:if="${!isEnded or isAdmin}">
     <section class="ballot-panel campaign-vote-panel"><div class="ballot-heading"><div><span class="eyebrow"><span class="eyebrow-line"></span> YOUR VOTE</span><h2>Choose a candidate</h2></div></div>
       <p class="empty-state" th:if="${#lists.isEmpty(candidates)}">No candidates have been added yet.</p>
       <div class="voted-state campaign-voted" th:if="${hasVoted}"><span class="voted-check">✓</span><h3>Vote recorded.</h3><p>You have already voted in this campaign.</p></div>

@@ -52,7 +52,17 @@ public class CampaignController {
             }
         }
 
-        boolean showResults = isAdmin || campaign.getEndDate().isBefore(LocalDate.now());
+        boolean isEnded = campaign.getEndDate().isBefore(LocalDate.now());
+        boolean showResults = isAdmin || isEnded;
+        Candidate voterChoice = null;
+        if (isEnded && principal != null) {
+            var voter = users.findByEmailIgnoreCase(principal.getName()).orElse(null);
+            if (voter != null && voter.getRole() != com.voting.entity.Role.ROLE_ADMIN) {
+                voterChoice = votes.findAllByCampaign_Id(campaignId).stream()
+                        .filter(vote -> vote.getVoter().getId().equals(voter.getId()))
+                        .map(com.voting.entity.Vote::getCandidate).findFirst().orElse(null);
+            }
+        }
         long totalVotes = 0;
         if (showResults) {
             for (var candidate : campaignCandidates) {
@@ -74,6 +84,9 @@ public class CampaignController {
         model.addAttribute("leadingVotes", leadingVotes);
         model.addAttribute("hasVoted", hasVoted);
         model.addAttribute("showResults", showResults);
+        model.addAttribute("isEnded", isEnded);
+        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("voterChoice", voterChoice);
         model.addAttribute("voteSuccess", model.asMap().get("voteSuccess"));
         model.addAttribute("voteError", model.asMap().get("voteError"));
         return "campaign";

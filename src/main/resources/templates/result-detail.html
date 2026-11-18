@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${result.campaignName})}"></head>
+<body class="dashboard-page">
+<header th:replace="~{fragments :: header}"></header>
+<main class="dashboard-shell layout-shell">
+  <div class="campaign-page-top"><a class="back-link" th:href="@{/results}">← All results</a><span class="campaign-state state-ended">Ended</span></div>
+  <section class="campaign-detail-heading"><span class="eyebrow">CAMPAIGN</span><h1 th:text="${result.campaignName}">Campaign name</h1><p th:text="${result.tagline}">Campaign tagline</p></section>
+  <section class="result-card"><h2>Results</h2>
+    <p><strong>Winner:</strong> <span th:text="${result.winnerName != null ? result.winnerName : 'No votes recorded'}">Candidate</span></p>
+    <p><strong>Your vote:</strong> <span th:text="${result.voterChoiceName != null ? result.voterChoiceName : 'You did not vote in this campaign'}">Your choice</span></p>
+  </section>
+</main>
+</body>
+</html>

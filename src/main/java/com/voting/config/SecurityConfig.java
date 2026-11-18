@@ -44,7 +44,9 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationSuccessHandler successHandler) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/about", "/login", "/register", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                        .requestMatchers("/user").hasRole("NORMAL")
+                        .requestMatchers("/results/**", "/user/results").authenticated()
                         .requestMatchers(HttpMethod.POST, "/campaigns/*/vote").hasRole("NORMAL")
                         .requestMatchers(HttpMethod.GET, "/campaigns/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")

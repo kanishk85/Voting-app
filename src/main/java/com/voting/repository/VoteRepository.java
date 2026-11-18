@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
     long countByCandidateId(Long candidateId);
     long countByCampaignId(Long campaignId);
-    java.util.List<Vote> findAllByCampaignId(Long campaignId);
-    java.util.List<Vote> findAllByCampaignIdAndVoterId(Long campaignId, Long voterId);
+    java.util.List<Vote> findAllByCampaign_Id(Long campaignId);
     boolean existsByVoterIdAndCampaignId(Long voterId, Long campaignId);
     java.util.List<Vote> findAllByCampaignIsNull();
     long deleteAllByCampaignId(Long campaignId);

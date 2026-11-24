@@ -16,7 +16,9 @@
   <a class="wordmark" sec:authorize="hasRole('NORMAL')" th:href="@{/user}" aria-label="Voting App ongoing campaigns">VOTING APP</a>
   <a class="wordmark" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" aria-label="Voting App admin dashboard">VOTING APP</a>
   <nav class="main-nav" aria-label="Main navigation">
-    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user}">Ongoing</a>
+    <a class="nav-link" sec:authorize="hasRole('NORMAL')" th:href="@{/user}">Ongoing</a>
+  <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Home</a>
+    
     <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/results}">Results</a>
   </nav>
   <div class="header-actions" sec:authorize="isAnonymous()">

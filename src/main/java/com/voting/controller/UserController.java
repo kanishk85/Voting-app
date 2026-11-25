@@ -30,10 +30,8 @@ public class UserController {
     }
 
     @GetMapping({"/results", "/user/results"})
-    public String results(java.security.Principal principal, Model model) {
-        var user = users.findByEmailIgnoreCase(principal.getName())
-                .orElseThrow(() -> new IllegalStateException("Signed in account could not be found."));
-        model.addAttribute("results", resultsService.resultsFor(user.getId()));
+    public String results(Model model) {
+        model.addAttribute("results", resultsService.resultsHome());
         return "results";
     }
 

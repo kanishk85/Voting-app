@@ -1,20 +1,11 @@
 package com.voting.controller;
 
-import com.voting.entity.Campaign;
-import com.voting.repository.CampaignRepository;
-import com.voting.repository.UserRepository;
-import com.voting.repository.VoteRepository;
-import com.voting.service.CampaignService;
-import com.voting.service.CandidateService;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.voting.entity.Campaign;
+import com.voting.repository.CampaignRepository;
+import com.voting.repository.UserRepository;
+import com.voting.repository.VoteRepository;
+import com.voting.service.CampaignService;
+import com.voting.service.CandidateService;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Controller
 public class AdminController {

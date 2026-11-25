@@ -1,12 +1,13 @@
 package com.voting.service;
 
-import com.voting.entity.Role;
-import com.voting.entity.User;
-import com.voting.repository.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.voting.entity.Role;
+import com.voting.entity.User;
+import com.voting.repository.UserRepository;
 
 @Service
 public class UserService {

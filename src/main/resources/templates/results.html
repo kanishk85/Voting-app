@@ -8,10 +8,10 @@
     <div class="campaign-section-heading"><h2>Campaign results</h2></div>
     <p class="empty-state" th:if="${#lists.isEmpty(results)}">No campaigns are available.</p>
     <div class="campaign-grid" th:unless="${#lists.isEmpty(results)}">
-      <a class="campaign-card" th:each="result : ${results}" th:href="@{/results/campaigns/{id}(id=${result.campaignId})}">
+      <a class="campaign-card" th:each="campaign : ${results}" th:href="@{/results/campaigns/{id}(id=${campaign.id})}">
         <div class="campaign-card-top"><span class="campaign-state state-ended">Ended</span><span class="campaign-card-arrow">↗</span></div>
-        <h3 th:text="${result.campaignName}">Campaign name</h3>
-        <p th:text="${result.tagline}">Campaign tagline</p>
+        <h3 th:text="${campaign.name}">Campaign name</h3>
+        <p th:text="${campaign.tagline}">Campaign tagline</p>
       </a>
     </div>
   </section>
